@@ -1,6 +1,6 @@
 {
   "name": "wp-mcp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Wordpress MCP Server",
   "main": "index.js",
   "bin": {
@@ -30,8 +30,6 @@
     "@types/minimatch": "^5.1.2",
     "@types/node": "^22",
     "@types/wpapi": "^1.1.4",
-    "concurrently": "^9.1.2",
-    "nodemon": "^3.1.9",
     "shx": "^0.3.4",
     "typescript": "^5.3.3"
   }
