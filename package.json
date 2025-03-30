@@ -1,5 +1,5 @@
 {
-  "name": "wp-mcp",
+  "name": "wp-mcp-server",
   "version": "0.0.3",
   "description": "Wordpress MCP Server",
   "main": "index.js",
@@ -17,6 +17,10 @@
     "publish": "npm run build && npm publish"
   },
   "author": "Dario Herrera",
+  "keywords": [
+    "mcp",
+    "wordpress"
+  ],
   "license": "ISC",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.7.0",
