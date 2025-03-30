@@ -3,7 +3,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { WordPressService } from "./services/wordpress_service";
-import { Post } from "./types";
+import { Category, Post } from "./types";
 
 // Create an MCP server
 const server = new McpServer({
@@ -25,8 +25,8 @@ const wpService = new WordPressService(WP_URL, WP_USERNAME, WP_PASSWORD);
 // Add an addition tool
 server.tool("fetch_posts",
     {
-        page: z.number().optional(),
-        perPage: z.number().optional()
+        page: z.number().optional().describe("Page number to fetch"),
+        perPage: z.number().optional().describe("Number of posts per page"),
     },
     async ({ page, perPage }) => {
         try {
@@ -75,11 +75,15 @@ server.tool("fetch_media", {},
     });
 
 server.tool("create_post", {
-    title: z.string(),
-    content: z.string()
+    title: z.string().describe("Title of the post"),
+    content: z.string().describe("Content of the post"),
+    categories: z.array(z.number()).optional().describe("Array of category IDs"),
+    tags: z.array(z.number()).optional().describe("Array of tag IDs"),
+    slug: z.string().optional().describe("Slug of the post"),
+    status: z.enum(["publish", "draft", "pending"]).optional().describe("Status of the post"),
 },
-    async ({ title, content }) => {
-        const post: Post = new Post(title, content);
+    async ({ title, content, slug, categories, status }) => {
+        const post: Post = new Post(title, content, slug, categories, status);
         try {
             const result = await wpService.createPost(post);
             return {
@@ -92,6 +96,29 @@ server.tool("create_post", {
             }
         }
     })
+
+server.tool("create_category", {
+    name: z.string(),
+    description: z.string().optional(),
+    slug: z.string().optional(),
+    parent: z.number().optional(),
+},
+    async ({ name, description, slug, parent }) => {
+        try {
+            // Create a new category
+            const category = new Category(name, description, slug, parent);
+            const result = await wpService.createCategory(category);
+            return {
+                content: [{ type: "text", text: JSON.stringify(result) }],
+            }
+        } catch (error) {
+            console.error("Error creating category:", error);
+            return {
+                content: [{ type: "text", text: "Error creating category" }],
+            }
+        }
+    })
+
 
 const startServer = async () => {
     try {

@@ -36,6 +36,8 @@ interface WPResult {
     date: string,
     categories: any[];
     tags: any[];
+    slug: string;
+    status: string;
 }
 
 
@@ -90,7 +92,9 @@ export class WordPressService {
                 excerpt: post.excerpt.rendered,
                 date: post.date,
                 categories: post.categories,
-                tags: post.tags
+                tags: post.tags,
+                slug: post.slug,
+                status: post.status
             }));
             return posts;
         } catch (error) {
@@ -177,9 +181,11 @@ export class WordPressService {
     public async createPost(post: Post): Promise<any> {
         try {
             const createdPost = await this.wp.posts().create({
-                title: post.getTitle(),
-                content: post.getContent(),
-                slug: post.getSlug()
+                title: post.title,
+                content: post.content,
+                slug: post.slug,
+                categories: post.categories,
+                tags: post.tags
             });
             return createdPost;
         } catch (error) {
@@ -188,6 +194,20 @@ export class WordPressService {
         }
     }
 
+    public async createCategory(category: Category): Promise<any> {
+        try {
+            const createdCategory = await this.wp.categories().create({
+                name: category.name,
+                description: category.description,
+                slug: category.slug,
+                parent: category.parent
+            });
+            return createdCategory;
+        } catch (error) {
+            console.error("Error creating category:", error);
+            throw error;
+        }
+    }
 
     getPostById(postId: number): Promise<any> {
         return this.wp.posts().id(postId).get();

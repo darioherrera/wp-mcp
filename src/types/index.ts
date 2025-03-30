@@ -1,14 +1,17 @@
 export class Post {
-    private id: number;         // ID del post.
-    private title: string;      // Título del post.
-    private slug: string;
-    private content: string;    // Contenido del post (HTML).
-    private excerpt: string;    // Extracto del post (HTML).
-    private date: string;       // Fecha de publicación del post (formato ISO 8601).
-    private categories: number[]; // IDs de las categorías asociadas al post.
-    private tags: number[];     // IDs de las etiquetas asociadas al post.
+    id: number;         // ID del post.
+    title: string;      // Título del post.
+    slug: string;
+    content: string;    // Contenido del post (HTML).
+    excerpt: string;    // Extracto del post (HTML).
+    date: string;
+    status: string;      // Fecha de publicación del post (formato ISO 8601).
+    categories: number[]; // IDs de las categorías asociadas al post.
+    tags: number[];     // IDs de las etiquetas asociadas al post.
 
-    constructor(title: string, content: string, slug?: string) {
+    constructor(title: string, content: string, slug?: string, categories?: number[], status?: string, tags?: number[]) {
+        this.categories = categories || [];
+        this.tags = tags || [];
         this.id = 0;
         this.title = title;
         this.content = content;
@@ -17,61 +20,28 @@ export class Post {
         this.date = new Date().toISOString();
         this.categories = [];
         this.tags = [];
-    }
-
-    public setId(id: number) {
-        this.id = id;
-    }
-
-    public setExcerpt(excerpt: string) {
-        this.excerpt = excerpt;
-    }
-    public setDate(date: string) {
-        this.date = date;
-    }
-    public setCategories(categories: number[]) {
-        this.categories = categories;
-    }
-    public setTags(tags: number[]) {
-        this.tags = tags;
-    }
-    public getId(): number {
-        return this.id;
-    }
-    public getTitle(): string {
-        return this.title;
-    }
-    public getSlug(): string {
-        return this.slug;
-    }
-    public getContent(): string {
-        return this.content;
-    }
-    public getExcerpt(): string {
-        return this.excerpt;
-    }
-    public getDate(): string {
-        return this.date;
-    }
-    public getCategories(): number[] {
-        return this.categories;
-    }
-    public getTags(): number[] {
-        return this.tags;
-    }
-    public toJSON(): object {
-        return {
-            title: this.title,
-            slug: this.slug,
-            content: this.content,
-            excerpt: this.excerpt,
-            date: this.date,
-            categories: this.categories,
-            tags: this.tags
-        };
-    }
-    public toString(): string {
-        return JSON.stringify(this.toJSON());
+        this.status = status || "draft";
     }
 }
 
+export class Category {
+    id: number;         // ID de la categoría.
+    name: string;       // Nombre de la categoría.
+    slug: string;       // Slug de la categoría (URL amigable).
+    count: number;      // Número de publicaciones en esta categoría.
+    parent: number;     // ID de la categoría padre (0 si es una categoría raíz).
+    description: string; // Descripción de la categoría.
+    link: string;       // URL de la categoría en el sitio WordPress.
+    meta: any[];        // Metadatos adicionales de la categoría.
+
+    constructor(name: string, description?: string, slug?: string, parent?: number) {
+        this.name = name;
+        this.description = description || "";
+        this.slug = slug || name.toLowerCase().replace(/ /g, "-");
+        this.parent = parent || 0;
+        this.count = 0;
+        this.id = 0;
+        this.link = "";
+        this.meta = [];
+    }
+}

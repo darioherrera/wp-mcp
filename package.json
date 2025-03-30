@@ -1,6 +1,6 @@
 {
   "name": "wp-mcp",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Wordpress MCP Server",
   "main": "index.js",
   "bin": {
@@ -20,10 +20,7 @@
   "author": "Dario Herrera",
   "license": "ISC",
   "dependencies": {
-    "@mendable/firecrawl-js": "^1.19.0",
     "@modelcontextprotocol/sdk": "^1.7.0",
-    "axios": "^1.8.4",
-    "dotenv": "^16.4.7",
     "wpapi": "^1.2.2",
     "zod-to-json-schema": "^3.24.5"
   },
