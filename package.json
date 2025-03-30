@@ -1,0 +1,41 @@
+{
+  "name": "wp-mcp",
+  "version": "1.0.0",
+  "description": "Wordpress MCP Server",
+  "main": "index.js",
+  "bin": {
+    "wp-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "npx @modelcontextprotocol/inspector node dist/index.js",
+    "dev": "nodemon --watch src --ext ts --exec \"npm run build && npm start\"",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write .",
+    "prepare": "npm run build",
+    "publish": "npm run build && npm publish"
+  },
+  "author": "Dario Herrera",
+  "license": "ISC",
+  "dependencies": {
+    "@mendable/firecrawl-js": "^1.19.0",
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "axios": "^1.8.4",
+    "dotenv": "^16.4.7",
+    "wpapi": "^1.2.2",
+    "zod-to-json-schema": "^3.24.5"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.7.0",
+    "@types/diff": "^5.0.9",
+    "@types/minimatch": "^5.1.2",
+    "@types/node": "^22",
+    "@types/wpapi": "^1.1.4",
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.9",
+    "shx": "^0.3.4",
+    "typescript": "^5.3.3"
+  }
+}
