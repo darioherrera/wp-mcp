@@ -1,5 +1,5 @@
 import WPAPI from 'wpapi';
-import { Post } from '../types';
+import { CategoryInput, Post, PostInput } from '../types';
 
 
 interface GetPostsOptions {
@@ -81,8 +81,8 @@ export class WordPressService {
         }
     }
 
-    public async fetch_posts(options: GetPostsOptions = {}): Promise<any> {
-        let posts: Array<Post> = [];
+    public async fetch_posts(options: GetPostsOptions = {}): Promise<Post[]> {
+        let posts: Post[] = [];
         try {
             let result: Array<WPResult> = await this.wp.posts().perPage(options.perPage || 10).page(options.page || 1).search(options.search || '').categories(options.categories || []).get();
             posts = result.map(post => ({
@@ -98,7 +98,7 @@ export class WordPressService {
             }));
             return posts;
         } catch (error) {
-            return error;
+            throw error
         }
     }
 
@@ -178,7 +178,7 @@ export class WordPressService {
         }
     }
 
-    public async createPost(post: Post): Promise<any> {
+    public async createPost(post: PostInput): Promise<any> {
         try {
             const createdPost = await this.wp.posts().create({
                 title: post.title,
@@ -194,13 +194,12 @@ export class WordPressService {
         }
     }
 
-    public async createCategory(category: Category): Promise<any> {
+    public async createCategory(category: CategoryInput): Promise<any> {
         try {
             const createdCategory = await this.wp.categories().create({
                 name: category.name,
                 description: category.description,
-                slug: category.slug,
-                parent: category.parent
+                slug: category.slug
             });
             return createdCategory;
         } catch (error) {
