@@ -206,16 +206,3 @@ Example error response:
 All contributions are welcome! Please ensure your changes align with the [Model Context Protocol TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) best practices.
 
 ---
-
-## License
-
-This project is licensed under the [MIT License](./LICENSE) (or the license of your choice). See the [LICENSE](./LICENSE) file for details.
-
----
-
-### Thank You!
-
-We appreciate your interest in using the **WordPress MCP Server**!  
-For help or feedback, feel free to open an issue in this repository or reach out through other channels connected to the [Model Context Protocol community](https://github.com/modelcontextprotocol/typescript-sdk).  
-
-Enjoy building with MCP!
