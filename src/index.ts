@@ -130,7 +130,7 @@ function buildCategoryInput(input: CategoryInput): Required<CategoryInput> {
     };
 }
 
-server.tool("create_category", "Creates a category in wordpress", {
+server.tool("create_category", "Creates a new category in wordpress", {
     name: z.string(),
     description: z.string(),
     slug: z.string().optional(),
