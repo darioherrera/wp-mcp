@@ -50,7 +50,7 @@ server.tool("fetch_posts", "Fetch posts from wordpress blog",
             console.error("Error fetching posts:", error);
             return {
                 content: [{ type: "text", text: "Error fetching posts" }],
-                isError: true // 👈 marcar que hubo error
+                isError: true //  
             }
         }
     });
