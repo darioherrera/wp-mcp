@@ -10,7 +10,7 @@ import { Category, CategoryInput, Post, PostInput } from "./types";
 const server = new McpServer({
     name: "Wordpress Plugin",
     description: "A plugin for Wordpress",
-    version: "1.0.0"
+    version: "0.0.3"
 });
 
 const WP_URL = process.env.WP_URL || "";
@@ -106,7 +106,6 @@ server.tool("create_post", "Creates a new posts in wordpress", {
     status: z.enum(["publish", "draft", "pending"]).optional().describe("Status of the post"),
 },
     async (params) => {
-
         try {
             const input = buildPostInput(params);
             const result = await wpService.createPost(input);
